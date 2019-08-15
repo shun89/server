@@ -60,18 +60,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'account.permissions.TokenExpirationCheck',
+        'public.permissions.TokenExpirationCheck',
     )
 }
 
 LANGUAGE_CODE = 'zh-Hans'
-
 TIME_ZONE = 'Asia/Shanghai'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = False
 
 
@@ -102,14 +98,6 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler',
             'filters': ['special']
         },
-        'sql': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOG_DIR, 'sql.log'),
-            'formatter': 'brief',
-            'backupCount': LOG_FILE_COUNT,
-            'maxBytes': LOG_FILE_SIZE_MAX
-        },
         'public': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -126,13 +114,8 @@ LOGGING = {
             'propagate': False,
             'level': 'INFO',
         },
-        'django.token': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-            'propagate': False,
-        },
         'django.db.backends': {
-            'handlers': ['sql'],
+            'handlers': ['public'],
             'level': 'WARNING',
             'propagate': False,
         },
@@ -144,3 +127,10 @@ LOGGING = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = '3164202528@qq.com'
+EMAIL_HOST_PASSWORD = 'zs@200483'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
