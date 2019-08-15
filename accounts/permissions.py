@@ -14,7 +14,7 @@ class TokenExpirationCheck(permissions.BasePermission):
         return access_token
 
     def has_permission(self, request, view):
-        access_token = self.get_access_token(request)
+        access_token = self._get_access_token(request)
         token_obj_list = Token.objects.filter(pk=access_token)
         if token_obj_list.exists():
             return True
