@@ -60,7 +60,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'public.permissions.TokenExpirationCheck',
+        'accounts.permissions.TokenExpirationCheck',
     )
 }
 
@@ -96,7 +96,6 @@ LOGGING = {
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['special']
         },
         'public': {
             'level': 'INFO',
@@ -105,7 +104,6 @@ LOGGING = {
             'formatter': 'detail',
             'backupCount': LOG_FILE_COUNT,
             'maxBytes': LOG_FILE_SIZE_MAX
-
         }
     },
     'loggers': {
