@@ -73,3 +73,74 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+
+LOG_FILE_COUNT = 3  # 备份份数
+LOG_FILE_SIZE_MAX = 10485706  # 日志大小10MB
+LOG_DIR = os.path.join(BASE_DIR, 'log')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'detail': {
+            'format': '%(asctime)s [%(process)d] [%(threadName)s:%(thread)d] '
+                      '[%(filename)s:%(lineno)d] [%(module)s:%(funcName)s] '
+                      '[%(levelname)s]- %(message)s'
+        },
+        'brief': {
+            'format': '[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d]%(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'detail'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['special']
+        },
+        'sql': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'sql.log'),
+            'formatter': 'brief',
+            'backupCount': LOG_FILE_COUNT,
+            'maxBytes': LOG_FILE_SIZE_MAX
+        },
+        'public': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'public.log'),
+            'formatter': 'detail',
+            'backupCount': LOG_FILE_COUNT,
+            'maxBytes': LOG_FILE_SIZE_MAX
+
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'INFO',
+        },
+        'django.token': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['sql'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'public': {
+            'handlers': ['public'],
+            'level': 'INFO',
+            'propagate': False,
+        }
+    }
+}
+
