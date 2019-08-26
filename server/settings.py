@@ -12,8 +12,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -55,12 +53,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'user.User'
+
+JWT_AUTH = {
+    # 'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_VERIFY_EXPIRATION': False,
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'user.utils.jwt_response_payload_handler',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'accounts.permissions.TokenExpirationCheck',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.permissions.AllowAny',
     )
 }
