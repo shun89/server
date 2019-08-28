@@ -9,7 +9,7 @@ from django.contrib.auth.models import (
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=20, unique=True)
     phone = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
     is_active = models.BooleanField(default=True)
