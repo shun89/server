@@ -1,22 +1,6 @@
-from rest_framework import permissions
-from rest_framework.authtoken.models import Token
-from rest_framework.exceptions import NotAuthenticated
+from rest_framework.permissions import BasePermission
 
 
-class TokenExpirationCheck(permissions.BasePermission):
-    message = ''
-
-    @staticmethod
-    def _get_access_token(request):
-        access_token = request.META['HTTP_AUTHORIZATION']
-        if access_token.startswith('Bearer '):
-            return access_token.replace('Bearer ', '')
-        return access_token
-
+class IsSuperuser(BasePermission):
     def has_permission(self, request, view):
-        access_token = self._get_access_token(request)
-        token_obj_list = Token.objects.filter(pk=access_token)
-        if token_obj_list.exists():
-            return True
-        else:
-            raise NotAuthenticated()
+        return bool(request.user and request.user.is_superuser)

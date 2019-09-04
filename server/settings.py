@@ -1,7 +1,5 @@
 import os
 
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'pee^34#xy=w=i2+$f5d9nl$*0@xe*up)$ov6^#(d1u^-h8z=)x'
@@ -14,6 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'guardian'
 ]
 
 MIDDLEWARE = [
@@ -57,6 +56,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'user.User'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend'
+]
+
 JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
     # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
@@ -71,7 +75,7 @@ REST_FRAMEWORK = {
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
 
