@@ -1,4 +1,3 @@
-import sys
 from django.apps import AppConfig
 from django.contrib.auth.models import Group
 
@@ -7,11 +6,10 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     def ready(self):
-        if 'runserver' not in sys.argv:
-            return True
-        from .constants import GROUP_EVERYONE, GROUP_ANONYMOUS, GROUP_USERS, GROUP_STAFFS
-        Group.objects.get_or_create(name=GROUP_EVERYONE)
-        Group.objects.get_or_create(name=GROUP_ANONYMOUS)
-        Group.objects.get_or_create(name=GROUP_USERS)
-        Group.objects.get_or_create(name=GROUP_STAFFS)
+        from .constants import EVERYONE_GROUP, ANONYMOUS_GROUP, USERS_GROUP, STAFFS_GROUP, SUPERUSERS_GROUP
+        Group.objects.get_or_create(name=EVERYONE_GROUP)
+        Group.objects.get_or_create(name=ANONYMOUS_GROUP)
+        Group.objects.get_or_create(name=USERS_GROUP)
+        Group.objects.get_or_create(name=STAFFS_GROUP)
+        Group.objects.get_or_create(name=SUPERUSERS_GROUP)
 
