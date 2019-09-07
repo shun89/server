@@ -37,4 +37,3 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = PasswordSerializer(data=request.data, context={'request': request})
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-
