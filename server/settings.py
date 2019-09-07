@@ -76,7 +76,19 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    )
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'public.throttles.AnonBurstRateThrottle',
+        'public.throttles.UserBurstRateThrottle'
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon-burst': '60/min',
+        'user-burst': '60/min',
+        'anon': '500/day',
+        'user': '2000/day'
+    }
 }
 
 LANGUAGE_CODE = 'zh-Hans'
