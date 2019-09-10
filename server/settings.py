@@ -12,8 +12,12 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.staticfiles',
+    'rest_framework',
     'guardian',
-    'django_filters'
+    'django_filters',
+    'public',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -26,6 +30,25 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'server.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        ,
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth'
+            ],
+        },
+    },
+]
+
+STATIC_URL = '/static/'
+
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
@@ -55,7 +78,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'users.User'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -67,7 +90,7 @@ JWT_AUTH = {
     # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_VERIFY_EXPIRATION': False,
     'JWT_ALLOW_REFRESH': True,
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'user.utils.jwt_response_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler',
     'JWT_AUTH_HEADER_PREFIX': 'Bearer'
 }
 
@@ -77,7 +100,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_THROTTLE_CLASSES': [
         'public.throttles.AnonBurstRateThrottle',
-        'public.throttles.UserBurstRateThrottle'
+        'public.throttles.UserBurstRateThrottle',
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ],
