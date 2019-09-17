@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -90,18 +91,33 @@ AUTHENTICATION_BACKENDS = [
     'guardian.backends.ObjectPermissionBackend'
 ]
 
-JWT_AUTH = {
-    # 'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
-    # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    'JWT_VERIFY_EXPIRATION': False,
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler',
-    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_THROTTLE_CLASSES': [
         'public.throttles.AnonBurstRateThrottle',
@@ -120,7 +136,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100,
-    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 LANGUAGE_CODE = 'zh-Hans'
