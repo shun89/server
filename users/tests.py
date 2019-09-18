@@ -1,9 +1,7 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from rest_framework.test import APIRequestFactory
 from .models import User
-from .views import UserViewSet
 
 
 class TokenTests(APITestCase):
@@ -49,9 +47,8 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_list(self):
-        # view = UserViewSet.as_view({'get': 'list'})
-        url = reverse('user-set-password')
-        response = self.client.get(url)
+        url = reverse('users:user-list')
+        response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve(self):
