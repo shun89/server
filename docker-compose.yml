@@ -1,0 +1,51 @@
+version: '3.1'
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+      PGDATA: /data/postgres
+      restart: always
+      #    volumes:
+      #       - /home/zs/Docker/share_data/postgres:/data/postgres
+
+
+  postgres_adminer:
+    image: dpage/pgadmin4
+    container_name: postgres_adminer
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "zhongshun6666@163.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports:
+      - 10001:80
+    restart: always
+
+  redis:
+      image: redis
+      container_name: redis
+      command: redis-server --requirepass admin@123456
+      restart: always
+      volumes:
+#        - /home/zs/data:/data
+
+  redis_adminer:
+    image: erikdubbelboer/phpredisadmin
+    container_name: redis_adminer
+    environment:
+      - ADMIN_USER=admin
+      - ADMIN_PASS=123456
+      - REDIS_1_HOST=redis
+      - REDIS_1_PORT=6379
+      - REDIS_1_AUTH=admin@123456
+    links:
+      - redis
+    ports:
+      - 10002:80
+    restart: always

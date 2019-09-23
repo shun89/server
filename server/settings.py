@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'guardian',
     'django_filters',
+    'channels',
     'public',
     'users'
 ]
@@ -65,6 +66,16 @@ DATABASES = {
         'NAME': 'server',
         'USER': 'admin',
         'PASSWORD': '123456',
+    }
+}
+
+REDIS_AUTH_INFO = 'admin@123456'
+CHANNEL_LAYERS = {
+    "default": {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [f'redis://:{REDIS_AUTH_INFO}@127.0.0.1:6379/0']
+        }
     }
 }
 
