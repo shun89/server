@@ -56,12 +56,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-WSGI_APPLICATION = 'server.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': 5432,
         'NAME': 'server',
         'USER': 'admin',
@@ -78,6 +77,8 @@ CHANNEL_LAYERS = {
         }
     }
 }
+
+ASGI_APPLICATION = 'server.routing.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

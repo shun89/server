@@ -1,19 +1,19 @@
 version: '3.1'
 
 services:
-
   postgres:
     image: postgres
     restart: always
     container_name: postgres
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: ${ADMIN}
+      POSTGRES_PASSWORD: ${PASSWORD}
       PGDATA: /data/postgres
       restart: always
+    ports:
+      - 5432:5432
       #    volumes:
       #       - /home/zs/Docker/share_data/postgres:/data/postgres
-
 
   postgres_adminer:
     image: dpage/pgadmin4
@@ -21,31 +21,42 @@ services:
     depends_on:
       - postgres
     environment:
-      PGADMIN_DEFAULT_EMAIL: "zhongshun6666@163.com"
-      PGADMIN_DEFAULT_PASSWORD: "123456"
+      PGADMIN_DEFAULT_EMAIL: ${EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PASSWORD}
     ports:
       - 10001:80
     restart: always
 
   redis:
-      image: redis
-      container_name: redis
-      command: redis-server --requirepass admin@123456
-      restart: always
-      volumes:
-#        - /home/zs/data:/data
+    image: redis
+    container_name: redis
+    command: redis-server --requirepass ${ADMIN}@${PASSWORD}
+    restart: always
+#    volumes:
+#      - /home/zs/data:/data
 
   redis_adminer:
     image: erikdubbelboer/phpredisadmin
     container_name: redis_adminer
     environment:
-      - ADMIN_USER=admin
-      - ADMIN_PASS=123456
+      - ADMIN_USER=${ADMIN}
+      - ADMIN_PASS=${PASSWORD}
       - REDIS_1_HOST=redis
       - REDIS_1_PORT=6379
-      - REDIS_1_AUTH=admin@123456
+      - REDIS_1_AUTH=${ADMIN}@${PASSWORD}
     links:
       - redis
     ports:
       - 10002:80
     restart: always
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 9000:8000
+    depends_on:
+      - postgres
+      - redis
