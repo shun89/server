@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .permissions import IsSuperuser, IsOwner
 from .models import User
 from .serializers import UserSerializer, PasswordSerializer
@@ -36,4 +37,11 @@ class UserViewSet(viewsets.ModelViewSet):
     def set_password(self, request, pk=None):
         serializer = PasswordSerializer(data=request.data, context={'request': request})
         serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def get_auth_user(self, request, pk=None):
+        authentication = JWTAuthentication()
+        user, _ = authentication.authenticate(request)
+        serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)

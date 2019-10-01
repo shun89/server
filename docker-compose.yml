@@ -6,6 +6,7 @@ services:
     restart: always
     container_name: postgres
     environment:
+      POSTGRES_DB: server
       POSTGRES_USER: ${ADMIN}
       POSTGRES_PASSWORD: ${PASSWORD}
       PGDATA: /data/postgres
@@ -50,13 +51,13 @@ services:
       - 10002:80
     restart: always
 
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - 9000:8000
-    depends_on:
-      - postgres
-      - redis
+#  web:
+#    build: .
+#    command: python manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - .:/code
+#    ports:
+#      - 9000:8000
+#    depends_on:
+#      - postgres
+#      - redis
