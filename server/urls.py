@@ -22,11 +22,11 @@ urlpatterns = [
              version="1.0.0"
          ),
          name='openapi-schema'),
-    path('swagger/',
+    path('redoc/',
          TemplateView.as_view(
-             template_name='index.html',
-             extra_context={'schema_url': 'openapi-schema'}
+            template_name='index.html',
+            extra_context={'schema_url': 'openapi-schema'}
          ),
-         name='swagger-ui'),
+         name='redoc'),
     path('api/', include((users_url, 'users'))),
 ] + static(settings.STATIC_URL)
