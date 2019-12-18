@@ -64,11 +64,11 @@ DATABASES = {
         'PORT': 5432,
         'NAME': 'server',
         'USER': 'admin',
-        'PASSWORD': '123456',
+        'PASSWORD': 'password',
     }
 }
 
-REDIS_AUTH_INFO = 'admin@123456'
+REDIS_AUTH_INFO = 'admin@password'
 CHANNEL_LAYERS = {
     "default": {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

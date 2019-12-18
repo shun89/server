@@ -25,7 +25,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PASSWORD}
     ports:
-      - 10001:80
+      - 20001:80
     restart: always
 
   redis:
@@ -48,7 +48,7 @@ services:
     links:
       - redis
     ports:
-      - 10002:80
+      - 20002:80
     restart: always
 
 #  web:
