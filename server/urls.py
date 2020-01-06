@@ -29,4 +29,4 @@ urlpatterns = [
          ),
          name='redoc'),
     path('api/', include((users_url, 'users'))),
-] + static(settings.STATIC_URL)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

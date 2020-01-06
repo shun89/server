@@ -1,5 +1,6 @@
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status, viewsets
-from rest_framework.decorators import action
+from rest_framework.decorators import action, parser_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -16,8 +17,13 @@ class UserViewSet(viewsets.ModelViewSet):
     pagination_class = Pagination
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['username']
-    ordering_fields = ['username']
-    ordering = ['username']
+    ordering_fields = ['create_at', 'is_active', 'is_superuser', 'is_staff']
+    ordering = ['-create_at']
+
+    # create user with avatar by post
+    @parser_classes([MultiPartParser, FormParser])
+    def create(self, request, *args, **kwargs):
+        return super(UserViewSet, self).create(request, *args, **kwargs)
 
     def get_permissions(self):
         permission_classes = []
@@ -30,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
         elif self.action in ['update', 'partial_update', 'destroy']:
             permission_classes = [IsOwner | IsSuperuser]
         elif self.action == 'set_password':
-            permission_classes = [IsAuthenticated | IsSuperuser]
+            permission_classes = [IsOwner | IsSuperuser]
         return [permission() for permission in permission_classes]
 
     @action(detail=True, methods=['post'])
