@@ -121,13 +121,16 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+        'rest_framework_simplejwt.tokens.SlidingToken',
+    ),
     'TOKEN_TYPE_CLAIM': 'token_type',
 
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=10),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
@@ -220,9 +223,12 @@ LOGGING = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_SSL = True
+EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.qq.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = '3164202528@qq.com'
-EMAIL_HOST_PASSWORD = 'zs@200483'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '875500848@qq.com'
+EMAIL_HOST_PASSWORD = 'gsgutpqszhmnbfej'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+#
+FRONTEND_RESET_PASSWORD_PAGE = 'http://localhost:20003/resetPassword'

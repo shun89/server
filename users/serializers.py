@@ -13,3 +13,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ['password']
+
+
+class RetrievePasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    user_id = serializers.CharField(max_length=200)
+    password = serializers.CharField(min_length=6)

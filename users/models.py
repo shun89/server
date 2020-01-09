@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.contrib.auth.models import (
     UserManager,
     AbstractBaseUser,
@@ -23,5 +23,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    def receive_email(self, subject, message, from_email=None, **kwargs):
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+    def receive_email(self, subject, html_content, from_email=None):
+        msg = EmailMessage(subject, html_content, from_email, [self.email])
+        msg.content_subtype = 'html'
+        msg.send()
+
