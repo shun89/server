@@ -224,11 +224,12 @@ LOGGING = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '875500848@qq.com'
+EMAIL_HOST_USER = 'zhongshun89@outlook.com'
 EMAIL_HOST_PASSWORD = 'gsgutpqszhmnbfej'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 #
 FRONTEND_RESET_PASSWORD_PAGE = 'http://localhost:20003/resetPassword'
