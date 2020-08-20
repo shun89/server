@@ -3,8 +3,11 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import (TokenObtainPairView,
-                                            TokenRefreshView, TokenVerifyView)
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
 
 from server import settings
 from users.urls import urlpatterns as users_url
