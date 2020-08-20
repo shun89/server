@@ -1,4 +1,8 @@
 {
     "python.pythonPath": "env\\Scripts\\python.exe",
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "editor.formatOnSave": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black"
 }

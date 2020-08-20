@@ -22,5 +22,3 @@ def user_post_save(sender):
         sender.groups.add(users_group)
     everyone_group = Group.objects.get(name=EVERYONE_GROUP)
     sender.groups.add(everyone_group)
-
-

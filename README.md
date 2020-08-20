@@ -1,4 +1,8 @@
 # Install
-1. copy .env.example .env
-2. python .\manage.py makemigrations
-3. python .\manage.py migrate
+
+1. python3 -m venv .venv 
+2. source .venv/bin/activate
+3. pip install -r ./requirements.txt
+4. copy .env.example .env
+5. python .\manage.py makemigrations
+6. python .\manage.py migrate

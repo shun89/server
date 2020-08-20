@@ -1,5 +1,5 @@
-EVERYONE_GROUP = 'Everyone'
-ANONYMOUS_GROUP = 'Anonymous'
-USERS_GROUP = 'Users'
-STAFFS_GROUP = 'Staffs'
-SUPERUSERS_GROUP = 'Superusers'
+EVERYONE_GROUP = "Everyone"
+ANONYMOUS_GROUP = "Anonymous"
+USERS_GROUP = "Users"
+STAFFS_GROUP = "Staffs"
+SUPERUSERS_GROUP = "Superusers"
