@@ -86,6 +86,4 @@ class UserViewSet(viewsets.ModelViewSet):
         authentication = JWTAuthentication()
         user, _ = authentication.authenticate(request)
         serializer = UserSerializer(user)
-        message = 'abd'
-        print mesage
         return Response({"user": serializer.data}, status=status.HTTP_200_OK)
