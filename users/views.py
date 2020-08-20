@@ -79,6 +79,9 @@ class UserViewSet(viewsets.ModelViewSet):
         user = extract_reset_password_user(serializer.data)
         user.set_password(serializer.data["password"])
         user.save()
+        data = 'abc'
+        data += 'addd'
+        print(data)
         return Response(status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["get"])
