@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.4'
 
 services:
   postgres:
@@ -13,8 +13,8 @@ services:
       restart: always
     ports:
       - 5432:5432
-      #    volumes:
-      #       - /home/zs/Docker/share_data/postgres:/data/postgres
+    # volumes:
+      # - /home/postgres:/data/postgres
 
   postgres_adminer:
     image: dpage/pgadmin4
@@ -33,12 +33,14 @@ services:
     container_name: redis
     command: redis-server --requirepass ${ADMIN}@${PASSWORD}
     restart: always
-#    volumes:
-#      - /home/zs/data:/data
+    # volumes:
+      # - /home/redis:/data
 
   redis_adminer:
     image: erikdubbelboer/phpredisadmin
     container_name: redis_adminer
+    depends_on:
+      - redis
     environment:
       - ADMIN_USER=${ADMIN}
       - ADMIN_PASS=${PASSWORD}
@@ -51,11 +53,14 @@ services:
       - 20002:80
     restart: always
 
-#  web:
-#    build: .
-#    command: daphne -b 0.0.0.0 -p 8000 server.asgi:application
-#    ports:
-#      - 9000:8000
-#    depends_on:
-#      - postgres
-#      - redis
+  # server:
+  #   image: server
+  #   depends_on: 
+  #     - redis
+  #     - postgres
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: daphne -b 0.0.0.0 -p 8000 server.asgi:application
+  #   ports:
+  #     - 8000 

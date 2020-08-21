@@ -16,7 +16,6 @@
     "flagWords": [],
     "ignorePaths": [],
     "enabledLanguageIds": [
-        "python",
-        "markdown"
+        "python"
     ]
 }
